@@ -1,22 +1,28 @@
 import AppLoading from "expo-app-loading";
-import React, { useState } from "react";
-import { Text, Image } from "react-native";
+import React from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { useFonts } from "expo-font";
 import { useAssets } from "expo-asset";
-import { NavigationContainer } from "@react-navigation/native";
+import { useColorScheme } from "react-native";
+
+import {
+  NavigationContainer,
+  DarkTheme,
+  DefaultTheme,
+} from "@react-navigation/native";
 import Tabs from "./navigation/Tabs";
 
 export default function App() {
   const [assets] = useAssets([require("./img/turtle-neck.png")]);
   const [loaded] = useFonts(Ionicons.font);
+  const isDark = useColorScheme() === "dark";
 
   if (!assets || !loaded) {
     return <AppLoading />;
   }
 
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={isDark ? DarkTheme : DefaultTheme}>
       <Tabs />
     </NavigationContainer>
   );
