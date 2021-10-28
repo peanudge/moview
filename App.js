@@ -4,6 +4,8 @@ import { Text, Image } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useFonts } from "expo-font";
 import { useAssets } from "expo-asset";
+import { NavigationContainer } from "@react-navigation/native";
+import Tabs from "./navigation/Tabs";
 
 export default function App() {
   const [assets] = useAssets([require("./img/turtle-neck.png")]);
@@ -13,5 +15,9 @@ export default function App() {
     return <AppLoading />;
   }
 
-  return <Text>We are done loading!</Text>;
+  return (
+    <NavigationContainer>
+      <Tabs />
+    </NavigationContainer>
+  );
 }
