@@ -1,24 +1,16 @@
 import AppLoading from "expo-app-loading";
 import React, { useState } from "react";
-import { Text } from "react-native";
+import { Text, Image } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { useFonts } from "expo-font";
+import { useAssets } from "expo-asset";
 
 export default function App() {
-  const [ready, setReady] = useState(false);
+  const [assets] = useAssets([require("./img/turtle-neck.png")]);
+  const [loaded] = useFonts(Ionicons.font);
 
-  const onFinish = () => setReady(true);
-
-  const startLoading = async () => {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-  };
-
-  if (!ready) {
-    return (
-      <AppLoading
-        startAsync={startLoading}
-        onFinish={onFinish}
-        onError={console.error}
-      />
-    );
+  if (!assets || !loaded) {
+    return <AppLoading />;
   }
 
   return <Text>We are done loading!</Text>;
