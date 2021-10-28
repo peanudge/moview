@@ -5,18 +5,16 @@ import { useFonts } from "expo-font";
 import { useAssets } from "expo-asset";
 import { useColorScheme } from "react-native";
 
-import {
-  NavigationContainer,
-  DarkTheme,
-  DefaultTheme,
-} from "@react-navigation/native";
-import Tabs from "./navigation/Tabs";
-import Stack from "./navigation/Stack";
+import { NavigationContainer } from "@react-navigation/native";
 import Root from "./navigation/Root";
+
+import { ThemeProvider } from "styled-components";
+import { darkTheme, lightTheme } from "./styled";
 
 export default function App() {
   const [assets] = useAssets([require("./img/turtle-neck.png")]);
   const [loaded] = useFonts(Ionicons.font);
+
   const isDark = useColorScheme() === "dark";
 
   if (!assets || !loaded) {
@@ -24,8 +22,10 @@ export default function App() {
   }
 
   return (
-    <NavigationContainer theme={isDark ? DarkTheme : DefaultTheme}>
-      <Root />
-    </NavigationContainer>
+    <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
+      <NavigationContainer>
+        <Root />
+      </NavigationContainer>
+    </ThemeProvider>
   );
 }
