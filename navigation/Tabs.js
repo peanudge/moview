@@ -3,18 +3,40 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Movie from "../screens/Movie";
 import Search from "../screens/Search";
 import Tv from "../screens/Tv";
+
 import { Ionicons } from "@expo/vector-icons";
-import Stack from "./Stack";
+import { useColorScheme } from "react-native";
+
+import { BLACK_COLOR, YELLOW_COLOR, LIGHT_GREY, DARK_GREY } from "../colors";
 
 const Tab = createBottomTabNavigator();
 
 const Tabs = () => {
+  const isDark = useColorScheme() === "dark";
+
   return (
     <Tab.Navigator
+      sceneContainerStyle={{
+        backgroundColor: isDark ? "black" : "white",
+      }}
+      sceneContainerStyle={{
+        backgroundColor: isDark ? BLACK_COLOR : "white",
+      }}
       screenOptions={{
+        tabBarStyle: {
+          backgroundColor: isDark ? BLACK_COLOR : "white",
+        },
+        tabBarActiveTintColor: isDark ? YELLOW_COLOR : BLACK_COLOR,
+        tabBarInactiveTintColor: isDark ? DARK_GREY : LIGHT_GREY,
+        headerStyle: {
+          backgroundColor: isDark ? BLACK_COLOR : "white",
+        },
+        headerTitleStyle: {
+          color: isDark ? "white" : BLACK_COLOR,
+        },
         tabBarLabelStyle: {
           marginTop: -5,
-          fontSize: 12,
+          fontSize: 10,
           fontWeight: "600",
         },
       }}
