@@ -9,7 +9,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import Root from "./navigation/Root";
 
 import { ThemeProvider } from "styled-components";
-import { darkTheme, lightTheme } from "./styled.js";
+import { darkTheme, lightTheme } from "./styled";
 
 import { QueryClient, QueryClientProvider } from "react-query";
 
