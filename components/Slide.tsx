@@ -15,7 +15,7 @@ const BgImg = styled.Image``;
 const Title = styled.Text`
   font-size: 16px;
   font-weight: 600;
-  color: white;
+  color: ${(props) => props.theme.textColor};
 `;
 const Wrapper = styled.View`
   flex-direction: row;
@@ -29,7 +29,7 @@ const Column = styled.View`
 `;
 
 const Overview = styled.Text`
-  color: rgba(255, 255, 255, 0.8);
+  color: ${(props) => props.theme.voteTextColor};
   margin-top: 10px;
 `;
 const Votes = styled(Overview)`

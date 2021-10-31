@@ -6,7 +6,7 @@ interface VotesProps {
 }
 
 const Text = styled.Text`
-  color: rgba(255, 255, 255, 0.8);
+  color: ${(props) => props.theme.voteTextColor};
   font-size: 10px;
 `;
 
