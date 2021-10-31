@@ -9,7 +9,11 @@ import { NavigationContainer } from "@react-navigation/native";
 import Root from "./navigation/Root";
 
 import { ThemeProvider } from "styled-components";
-import { darkTheme, lightTheme } from "./styled";
+import { darkTheme, lightTheme } from "./styled.js";
+
+import { QueryClient, QueryClientProvider } from "react-query";
+
+const queryClient = new QueryClient();
 
 export default function App() {
   const [assets] = useAssets([require("./img/turtle-neck.png")]);
@@ -22,10 +26,12 @@ export default function App() {
   }
 
   return (
-    <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
-      <NavigationContainer>
-        <Root />
-      </NavigationContainer>
-    </ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
+        <NavigationContainer>
+          <Root />
+        </NavigationContainer>
+      </ThemeProvider>
+    </QueryClientProvider>
   );
 }
