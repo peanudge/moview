@@ -12,6 +12,7 @@ import {
 } from "react-native";
 import Poster from "./Poster";
 import { useNavigation } from "@react-navigation/native";
+import { Movie } from "../api";
 const BgImg = styled.Image``;
 
 const Title = styled.Text`
@@ -45,6 +46,7 @@ interface SlideProps {
   originalTitle: string;
   voteAverage: number;
   overview: string;
+  fullData: Movie;
 }
 
 const Slide: React.FC<SlideProps> = ({
@@ -53,12 +55,13 @@ const Slide: React.FC<SlideProps> = ({
   originalTitle,
   voteAverage,
   overview,
+  fullData,
 }) => {
   const isDark = useColorScheme() === "dark";
   const navigation = useNavigation();
   const goToDetail = () => {
     //@ts-ignore
-    navigation.navigate({ name: "Stack", screen: "Detail" });
+    navigation.navigate("Stack", { screen: "Detail", params: { ...fullData } });
   };
 
   return (
