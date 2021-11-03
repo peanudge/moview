@@ -5,8 +5,10 @@ import {
   Text,
   Dimensions,
   StyleSheet,
-  Linking,
+  Share,
   useColorScheme,
+  TouchableOpacity,
+  Platform,
 } from "react-native";
 import styled from "styled-components/native";
 import Poster from "../components/Poster";
@@ -83,18 +85,53 @@ const Detail: React.FC<DetailScreenProps> = ({
     [isMovie ? "movies" : "tv", params.id],
     isMovie ? movieAPI.detail : tvAPI.detail
   );
+  const shareMedia = async () => {
+    const isAndroid = Platform.OS === "android";
 
+    const hompage = isMovie
+      ? `http://www.imdb.com/title/${data.imdb_id}`
+      : data.hompage;
+
+    if (isAndroid) {
+      await Share.share({
+        message: `${params.overview}\n Check it out: ${hompage}`,
+        title: isMovie ? params.original_title : params.original_name,
+      });
+    } else {
+      await Share.share({
+        url: hompage,
+        title: isMovie ? params.original_title : params.original_name,
+      });
+    }
+  };
+  const ShareButton = () => {
+    return (
+      <TouchableOpacity onPress={shareMedia}>
+        <Ionicons name="share-outline" color="white" size={24} />
+      </TouchableOpacity>
+    );
+  };
   useEffect(() => {
     setOptions({
       title: isMovie ? params.original_title : params.original_name,
     });
   }, []);
 
+  // NOTE: Check Header is not re-rendering!!!! so another use Effect with dependency(data)
+  useEffect(() => {
+    if (data) {
+      setOptions({
+        headerRight: () => <ShareButton />,
+      });
+    }
+  }, [data]);
+
   const openYoutubeLink = async (videoID) => {
     const baseUrl = `http://m.youtube.com/watch?v=${videoID}`;
     // await Linking.openURL(baseUrl);
     await WebBrowser.openBrowserAsync(baseUrl);
   };
+
   return (
     <Container>
       <Header>
